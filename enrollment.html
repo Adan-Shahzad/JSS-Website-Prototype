@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JobSkillShare | Enrollment</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 32px; background: #f4f8fd; color: #0a2540; font: 16px/1.5 Inter, Arial, sans-serif; }
+    main { width: min(100%, 680px); padding: 48px; text-align: center; background: #fff; border: 1px solid #dce6f2; border-radius: 20px; box-shadow: 0 24px 60px rgba(10, 37, 64, .12); }
+    .check { width: 68px; height: 68px; display: grid; place-items: center; margin: 0 auto 20px; border-radius: 50%; background: #e4f7ea; color: #16803c; font-size: 34px; font-weight: 800; }
+    h1 { margin: 0 0 12px; font-size: clamp(28px, 5vw, 40px); line-height: 1.1; }
+    p { margin: 0 auto 24px; max-width: 520px; color: #52647d; }
+    .details { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; text-align: left; }
+    .detail { padding: 14px 16px; border-radius: 10px; background: #f5f9ff; }
+    .detail span { display: block; color: #65758c; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+    .detail strong { display: block; margin-top: 4px; overflow-wrap: anywhere; }
+    a { display: inline-block; padding: 13px 20px; border-radius: 9px; background: #1e63ff; color: #fff; font-weight: 800; text-decoration: none; }
+    .note { margin-top: 20px; font-size: 12px; }
+    @media (max-width: 560px) { main { padding: 32px 20px; } .details { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="check">✓</div>
+    <h1>Enrollment link received</h1>
+    <p>This local prototype confirms that the membership CTA passed the selected plan and affiliate reference through to the final enrollment destination.</p>
+    <div class="details">
+      <div class="detail"><span>Selected plan</span><strong id="plan">Not selected</strong></div>
+      <div class="detail"><span>Affiliate reference</span><strong id="affiliate">Not supplied</strong></div>
+    </div>
+    <a href="index.html">Return to JobSkillShare</a>
+    <p class="note">For production, replace this local page with the approved affiliate checkout URL while keeping the <code>plan</code> and <code>aff</code> parameters.</p>
+  </main>
+  <script>
+    const query = new URLSearchParams(window.location.search);
+    document.getElementById('plan').textContent = query.get('plan') || 'Not selected';
+    document.getElementById('affiliate').textContent = query.get('aff') || 'Not supplied';
+  </script>
+</body>
+</html>
