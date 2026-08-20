@@ -489,4 +489,13 @@
 </script>
 <script src="scroll-reveal.js"></script>
 <script src="catalog-links.js"></script>
+<script>
+  document.querySelectorAll('button').forEach(function (button) {
+    if (button.textContent.trim() === 'Join Discord Community') {
+      button.addEventListener('click', function () {
+        window.location.href = 'https://discord.com/';
+      });
+    }
+  });
+</script>
 </body></html>

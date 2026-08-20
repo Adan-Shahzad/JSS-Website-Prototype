@@ -404,6 +404,58 @@
     });
   });
 </script>
+<script>
+  (function () {
+    var filters = document.querySelector('.bc-filters');
+    var grid = document.querySelector('.bc-grid');
+    if (!filters || !grid) return;
+
+    var searchInput = filters.querySelector('.bc-search input');
+    var filterButtons = Array.prototype.slice.call(filters.querySelectorAll('.bc-filter-btn'));
+    var count = filters.querySelector('.bc-count strong');
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.bc-card'));
+    var activeFilter = 'all';
+    var noResults = document.createElement('p');
+
+    noResults.className = 'bc-no-results';
+    noResults.textContent = 'No courses match your search. Try another keyword or clear the filter.';
+    noResults.hidden = true;
+    noResults.style.cssText = 'grid-column: 1 / -1; margin: 0; padding: 24px; border: 1px solid var(--border-strong); border-radius: 12px; color: #64748b; text-align: center;';
+    grid.appendChild(noResults);
+
+    function filterCourses() {
+      var query = searchInput.value.trim().toLowerCase();
+      var matches = 0;
+
+      cards.forEach(function (card) {
+        var matchesQuery = !query || card.textContent.toLowerCase().indexOf(query) !== -1;
+        var isFree = !!card.querySelector('.bc-badge-free');
+        var matchesFilter = activeFilter === 'all' || isFree;
+        var isMatch = matchesQuery && matchesFilter;
+
+        card.hidden = !isMatch;
+        card.style.display = isMatch ? '' : 'none';
+        if (isMatch) matches += 1;
+      });
+
+      count.textContent = matches;
+      noResults.hidden = matches !== 0;
+    }
+
+    searchInput.addEventListener('input', filterCourses);
+    filterButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        activeFilter = button.textContent.trim().toLowerCase().indexOf('free') !== -1 ? 'free' : 'all';
+        filterButtons.forEach(function (item) {
+          item.classList.toggle('active', item === button);
+        });
+        filterCourses();
+      });
+    });
+
+    filterCourses();
+  })();
+</script>
 <script src="scroll-reveal.js"></script>
 <script src="catalog-links.js"></script>
 </body></html>
