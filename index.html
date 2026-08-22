@@ -365,7 +365,7 @@
       headerInner.appendChild(toggle);
       headerInner.appendChild(menu);
 
-      var mobileQuery = window.matchMedia('(max-width: 600px)');
+      var mobileQuery = window.matchMedia('(max-width: 950px)');
       function applyNavigationLayout() {
         if (mobileQuery.matches) {
           menu.appendChild(nav);
@@ -487,8 +487,10 @@
     });
   });
 </script>
+<script src="faq-section.js"></script>
 <script src="scroll-reveal.js"></script>
 <script src="catalog-links.js"></script>
+<script src="course-covers.js"></script>
 <script>
   document.querySelectorAll('button').forEach(function (button) {
     if (button.textContent.trim() === 'Join Discord Community') {

@@ -14,6 +14,26 @@
       actions.innerHTML = '<a class="btn btn-primary" href="https://www.jobskillshare.org/?ref=adan-shahzad#/membership">Create Account</a><a class="btn btn-primary" href="https://www.jobskillshare.org/?ref=adan-shahzad#/membership">Log In</a>';
     }
 
+    var membershipLink = nav.querySelector('.membership-nav-link');
+    if (!membershipLink) {
+      membershipLink = document.createElement('a');
+      membershipLink.className = 'membership-nav-link';
+      membershipLink.textContent = 'Membership';
+      nav.appendChild(membershipLink);
+    }
+    if (membershipLink) {
+      var pageName = window.location.pathname.split('/').pop() || 'index.html';
+      var returnTo = pageName + window.location.search + window.location.hash;
+      membershipLink.href = 'programs.html?modal=signup&returnTo=' + encodeURIComponent(returnTo);
+      membershipLink.addEventListener('click', function () {
+        sessionStorage.setItem('membershipReturnTo', returnTo);
+      });
+      if ((window.location.pathname.split('/').pop() || 'index.html') === 'programs.html' &&
+          new URLSearchParams(window.location.search).get('modal') === 'signup') {
+        membershipLink.classList.add('active');
+      }
+    }
+
     var toggle = document.createElement('button');
     toggle.className = 'mobile-nav-toggle';
     toggle.type = 'button';
@@ -34,7 +54,7 @@
       toggle.setAttribute('aria-label', 'Open navigation menu');
     }
 
-    var mobileQuery = window.matchMedia('(max-width: 600px)');
+    var mobileQuery = window.matchMedia('(max-width: 950px)');
     function applyNavigationLayout() {
       if (mobileQuery.matches) {
         menu.appendChild(nav);
