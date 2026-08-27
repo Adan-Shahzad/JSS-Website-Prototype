@@ -12,22 +12,24 @@
     document.head.appendChild(siteContent);
   }
 
-  var currentPage = window.location.pathname.split('/').pop() || 'index.html';
-  var referralUrl = 'programs.html?modal=signup&returnTo=' + encodeURIComponent(currentPage + window.location.search + window.location.hash);
-  var conversionCta = /\b(create (?:a )?(?:free |premium )?account|log\s*in|login|membership|access plan|start .*program|start learning|watch free course|open my learning|choose premium)\b/i;
-
-  function isMembershipNavigation(element) {
-    return !!(element && element.matches && element.matches('a.membership-nav-link, a[href*="modal=signup"]'));
-  }
+  var officialUrl = 'https://www.jobskillshare.org/';
+  var membershipPlansUrl = 'membership-plans.html';
+  var conversionCta = /\b(create (?:a )?(?:free |premium )?account|log\s*in|login|membership|access plan|start .*?(?:program|course)|start learning|watch free course|open my learning|choose premium|explore membership)\b/i;
 
   function isConversionCta(element) {
     if (!element || !element.matches || !element.matches('a, button, input[type="submit"], input[type="button"]')) return false;
+    if (element.closest('#modals-container')) return false;
     return conversionCta.test((element.textContent || element.value || '').trim());
   }
 
+  function destinationFor(element) {
+    if (/membership/i.test((element.textContent || element.value || '').trim())) return membershipPlansUrl;
+    return officialUrl;
+  }
+
   function setReferralHref(element) {
-    if (element && element.tagName === 'A' && isConversionCta(element) && !isMembershipNavigation(element)) {
-      element.href = referralUrl;
+    if (element && element.tagName === 'A' && isConversionCta(element)) {
+      element.href = destinationFor(element);
     }
   }
 
@@ -37,11 +39,11 @@
 
   document.addEventListener('click', function (event) {
     var cta = event.target.closest && event.target.closest('a, button, input[type="submit"], input[type="button"]');
-    if (!isConversionCta(cta) || isMembershipNavigation(cta)) return;
+    if (!isConversionCta(cta)) return;
 
     event.preventDefault();
     event.stopImmediatePropagation();
-    window.location.assign(referralUrl);
+    window.location.assign(destinationFor(cta));
   }, true);
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { updateLinks(); });

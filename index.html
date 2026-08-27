@@ -1,7 +1,8 @@
 <!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech4D — Practical IT Training for Real-World Careers</title>
+    <title>JobSkillShare — Practical IT Training for Real-World Careers</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
   <style>
     /* Keep the home page focused; the catalog pages show the full lists. */
@@ -56,10 +57,24 @@
       [loginWrapper, caWrapper, caStep2Wrapper, caStep3Wrapper].forEach(function(w) {
         if (w) w.style.display = 'none';
       });
+      document.querySelectorAll('.main-nav .membership-nav-link').forEach(function(link) {
+        link.classList.toggle('active', el === caWrapper || el === caStep2Wrapper || el === caStep3Wrapper);
+      });
       if (el) { el.style.display = 'block'; document.body.style.overflow = 'hidden'; }
       else document.body.style.overflow = '';
     }
 
+    function ensureMembershipNavLink() {
+      var nav = document.querySelector('.site-header .main-nav');
+      if (!nav || nav.querySelector('.membership-nav-link')) return;
+      var link = document.createElement('a');
+      link.className = 'membership-nav-link';
+      link.href = 'membership-plans.html';
+      link.textContent = 'Membership plans';
+      nav.appendChild(link);
+    }
+
+    ensureMembershipNavLink();
     function getMembershipPlanLabel(plan) {
       if (plan === 'monthly') return 'Premium Monthly - $50.00';
       if (plan === 'yearly') return 'Premium Yearly - $549.00';
@@ -99,10 +114,15 @@
              el.closest('#login-modal-wrapper');
     };
     document.querySelectorAll('button').forEach(function(btn) {
+      if ((btn.textContent || '').trim() === 'Explore Membership Options') {
+        btn.addEventListener('click', function() { window.location.href = 'membership-plans.html'; });
+      }
+    });
+    document.querySelectorAll('button').forEach(function(btn) {
       if (skipInsideModal(btn)) return;
       var t = (btn.textContent || '').trim();
       if (t === 'Create Account' || t === 'Create Free Account' ||
-          t === 'Explore Membership Options' || t === 'Explore Membership' ||
+          t === 'Explore Membership' ||
           t === 'Explore Premium Membership →' ||
           t === 'Choose Premium Monthly' || t === 'Choose Premium Yearly') {
         btn.addEventListener('click', function(e) { e.preventDefault(); showOnly(caWrapper); });
@@ -490,6 +510,21 @@
 <script src="scroll-reveal.js"></script>
 <script src="catalog-links.js"></script>
 <script src="course-covers.js"></script>
+<script src="site-shell.js"></script>
+<script>
+  (function () {
+    var nav = document.querySelector('.site-header .main-nav');
+    if (!nav) return;
+    var membershipLink = nav.querySelector('.membership-nav-link');
+    if (!membershipLink) {
+      membershipLink = document.createElement('a');
+      membershipLink.className = 'membership-nav-link';
+      membershipLink.textContent = 'Membership plans';
+      nav.appendChild(membershipLink);
+    }
+    membershipLink.href = 'membership-plans.html';
+  })();
+</script>
 <script>
   document.querySelectorAll('button').forEach(function (button) {
     if (button.textContent.trim() === 'Join Discord Community') {

@@ -22,12 +22,7 @@
       nav.appendChild(membershipLink);
     }
     if (membershipLink) {
-      var pageName = window.location.pathname.split('/').pop() || 'index.html';
-      var returnTo = pageName + window.location.search + window.location.hash;
-      membershipLink.href = 'programs.html?modal=signup&returnTo=' + encodeURIComponent(returnTo);
-      membershipLink.addEventListener('click', function () {
-        sessionStorage.setItem('membershipReturnTo', returnTo);
-      });
+      membershipLink.href = 'membership-plans.html';
       if ((window.location.pathname.split('/').pop() || 'index.html') === 'programs.html' &&
           new URLSearchParams(window.location.search).get('modal') === 'signup') {
         membershipLink.classList.add('active');

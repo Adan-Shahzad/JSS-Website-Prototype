@@ -21,7 +21,7 @@
   if (!p) { window.location.replace('programs.html'); return; }
   var returnTo = window.location.pathname.split('/').pop() || ('program-detail.html?program=' + encodeURIComponent(key));
   document.title = p.title + ' | JobSkillShare';
-  var referralUrl = 'https://www.jobskillshare.org/?ref=adan-shahzad#/membership';
+  var referralUrl = 'https://www.jobskillshare.org/';
   document.getElementById('signup-link').href = referralUrl;
   document.getElementById('login-link').href = referralUrl;
   var courseWord = p.courses === 1 ? 'course' : 'courses';
@@ -34,7 +34,7 @@
   reviewScript.src = 'review-section.js';
   document.body.appendChild(reviewScript);
   var footerScript = document.createElement('script');
-  footerScript.src = 'footer-section.js';
+  footerScript.src = 'site-shell.js';
   document.body.appendChild(footerScript);
   var revealScript = document.createElement('script');
   revealScript.src = 'scroll-reveal.js';

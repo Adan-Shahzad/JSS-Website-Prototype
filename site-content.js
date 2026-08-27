@@ -7,7 +7,7 @@
     if (!isHome || !stats || document.querySelector('.site-trust-section')) return;
 
     var section = document.createElement('section');
-    var plansHref = 'programs.html?modal=signup&returnTo=' + encodeURIComponent('index.html' + window.location.hash);
+    var plansHref = 'membership-plans.html';
     section.className = 'site-trust-section';
     section.id = 'membership';
     section.innerHTML =
@@ -31,10 +31,9 @@
   function ensureMembershipNavigation() {
     var nav = document.querySelector('.site-header .main-nav');
     if (!nav || nav.querySelector('.membership-nav-link')) return;
-    var pageName = window.location.pathname.split('/').pop() || 'index.html';
     var link = document.createElement('a');
     link.className = 'membership-nav-link';
-    link.href = 'programs.html?modal=signup&returnTo=' + encodeURIComponent(pageName + window.location.search + window.location.hash);
+    link.href = 'membership-plans.html';
     link.textContent = 'Membership';
     nav.appendChild(link);
   }
